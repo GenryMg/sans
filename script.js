@@ -3,14 +3,16 @@ let text = decodeURIComponent((location.search + '').replace(/\+/g, '%20').repla
 let i = 0;
 let textAnimation = "* ";
 let delay = 40;
+let skipped = false;
 
-(() => {let face = "faces/face_" + Math.floor(Math.random() * 9) + ".png";
+(() => {
+  let face = "faces/face_" + Math.floor(Math.random() * 9) + ".png";
   document.getElementById("face").src = face;
 
   if(text == "" || text == null){
     text = "type in the text box at the bottom to make me say anything";
   }else{
-    document.getElementById("input").placeholder = text;
+    document.getElementById("input").value = text;
   }
 
   loop();
@@ -19,7 +21,16 @@ let delay = 40;
 function loop(){
   setTimeout(() => {
     delay = 40;
-    if(i < text.length){
+
+    // key presses
+    document.onkeydown = (e) => {
+      if(e.keyCode == 88 || e.keyCode == 16){
+        skipped = true;
+        document.getElementById("text").innerHTML = "* " + text;
+      }
+    };
+
+    if(i < text.length && !skipped){
       textAnimation += text.charAt(i);
       if(text.charAt(i) == ',' || text.charAt(i) == ';') {
         delay = 500;
