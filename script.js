@@ -1,14 +1,18 @@
-let text = decodeURIComponent((location.search + '').replace(/\+/g, '%20').replace(/input=/, "").substring(1).toLowerCase());
+let text = decodeURIComponent((location.search + '').replace(/\+/g, '%20').replace(/input=/, "").replace(/[^\x00-\x7F]/g, "").substring(1).toLowerCase());
 
 let i = 0;
 let textAnimation = "* ";
-let delay = 35;
+let delay = 40;
 
-(() => {
-  console.log(text + " | " + text.length);
+(() => {let face = "faces/face_" + Math.floor(Math.random() * 9) + ".png";
+  document.getElementById("face").src = face;
+
   if(text == "" || text == null){
-    text = "type in the text box in the bottom right corner";
+    text = "type in the text box at the bottom to make me say anything";
+  }else{
+    document.getElementById("input").placeholder = text;
   }
+
   loop();
 })();
 
@@ -26,7 +30,6 @@ function loop(){
       }
 
       document.getElementById("text").innerHTML = textAnimation;
-      console.log(i)
       i++;
       loop();
     }
