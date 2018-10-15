@@ -24,7 +24,7 @@ html, body {
   left: 50%;
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
-  word-break: break-all;
+  word-break: break-word;
   display: flex;
   align-items: flex-start
 }
